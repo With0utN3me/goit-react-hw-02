@@ -1,0 +1,14 @@
+.friend-image{
+    margin: 0 auto;
+    margin-bottom: 12px;
+}
+.friend-name{
+    font-size: 18px;
+    font-weight: 550;
+}
+.statusRed{
+    color: red;
+}
+.statusGreen{
+    color: #0de20d;
+}
