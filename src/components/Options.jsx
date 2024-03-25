@@ -1,9 +1,15 @@
-const Options = ({updateF}) => {
+
+const Options = ({updateF, totalF, updateTotalF, resetF}) => {
 return (
     <div>
-        <button onClick={() => updateF("good")}>Good</button>
-        <button onClick={() => updateF("neutral")}>Neutral</button>
-        <button onClick={() => updateF("bad")}>Bad</button>
+        <button onClick={() =>{updateF("good") 
+        updateTotalF()}}>Good</button>
+        <button onClick={() => {updateF("neutral")
+        updateTotalF()}}>Neutral</button>
+        <button onClick={() => {updateF("bad")
+        updateTotalF()}}>Bad</button>
+        {totalF > 0 && <button onClick={() => {resetF()
+        updateTotalF()}}>Reset</button>}
     </div>
 )
 }
