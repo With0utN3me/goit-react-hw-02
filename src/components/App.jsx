@@ -1,8 +1,10 @@
 import './App.css'
 import { useState, useEffect } from 'react';
-import Description from './DescriptionTitle';
+import Description from './Description';
 import Options from './Options';
 import Feedback from './Feedback';
+import Notification from './Notification';
+
 const App = () => {
   const [feedbacks, setFeedbacks] = useState (() => {
     const savedFeedbacks = window.localStorage.getItem("saved-feedbacks");
@@ -15,19 +17,12 @@ const App = () => {
         bad: 0
       }
   })
-  const [totalFeedback, setTotalFeedback] = useState (() => {
-    const savedTotalFeedback = window.localStorage.getItem("saved-total-feedbacks");
-    if(savedTotalFeedback !== null) {
-      return +savedTotalFeedback;
-    }
-    return 0;
-  })
+  const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
   const updateFeedback = feedbackType => {
     setFeedbacks(prevState => ({
       ...prevState,
       [feedbackType]: prevState[feedbackType] + 1
     }));
-    setTotalFeedback(total => total + 1);
   }
   const resetFeedbacks = () => {
     setFeedbacks({
@@ -35,7 +30,6 @@ const App = () => {
       neutral: 0,
       bad: 0
     });
-    setTotalFeedback(0);
   }
   useEffect(() => {
     window.localStorage.setItem("saved-feedbacks", JSON.stringify(feedbacks));
@@ -43,6 +37,9 @@ const App = () => {
   useEffect(() => {
     window.localStorage.setItem("saved-total-feedbacks", totalFeedback);
   }, [totalFeedback]);
+
+  const positiveFeedback = Math.round((feedbacks.good/ totalFeedback) * 100)
+
   return (
     <>
     <Description/>
@@ -55,8 +52,9 @@ const App = () => {
         valueG = {feedbacks.good}
         valueN = {feedbacks.neutral}
         valueB = {feedbacks.bad}
+        valueP = {positiveFeedback}
         valueTF = {totalFeedback}
-    /> : <p className='feedback-p'>No feedbacks yet</p>}
+    /> : <Notification/>}
     </>
   )
 }
