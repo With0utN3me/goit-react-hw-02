@@ -34,11 +34,11 @@ const App = () => {
   useEffect(() => {
     window.localStorage.setItem("saved-feedbacks", JSON.stringify(feedbacks));
   }, [feedbacks]);
-  useEffect(() => {
-    window.localStorage.setItem("saved-total-feedbacks", totalFeedback);
-  }, [totalFeedback]);
 
-  const positiveFeedback = Math.round((feedbacks.good/ totalFeedback) * 100)
+  let positiveFeedback = 0;
+  if(totalFeedback > 0){
+    positiveFeedback = Math.round((feedbacks.good/ totalFeedback) * 100);
+  }
 
   return (
     <>
